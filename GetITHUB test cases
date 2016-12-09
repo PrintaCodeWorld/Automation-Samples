@@ -1,0 +1,80 @@
+//Homepage
+
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
+
+
+
+namespace GetIThub
+{
+    [TestClass]
+    public class GetIThubdetails
+    {
+        [TestMethod]
+        public void Gethub()
+        {
+
+            IWebDriver driverch = new InternetExplorerDriver();
+            driverch.Navigate().GoToUrl("https://github.com/");
+
+            IWebElement signintest = driverch.FindElement(By.LinkText("Sign in"));
+           
+            //driverch.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(15));
+            MainLogin.Login(driverch, signintest);
+
+        
+        }
+    }
+}
+
+
+
+
+
+// Login details
+
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
+
+namespace GetIThub
+{
+    class MainLogin
+    {
+
+        public static void Login(IWebDriver driverch, IWebElement signintest)
+        {
+
+            signintest.Click();
+
+
+            IWebElement username =   driverch.FindElement(By.Id("login_field"));
+            IWebElement password = driverch.FindElement(By.Id("password"));
+            IWebElement sub = driverch.FindElement(By.XPath("//input[@name='commit']"));
+
+
+            username.SendKeys("Username");
+            password.SendKeys("Password");
+            sub.Submit();
+
+            IWebElement dropdown = driverch.FindElement(By.XPath("//ul[@id='user-links']/li[3]/a/span"));
+            dropdown.Click();
+            string  yprofile = driverch.FindElement(By.XPath("//*[@id='user-links']/li[3]/div/div/a[1]")).Text;
+           
+
+             Assert.AreEqual(yprofile, "Your profile");
+            Assert.AreEqual(true, driverch.FindElement(By.XPath("//*[@id='user-links']/li[3]/div/div/a[1]")).Displayed);
+
+            IWebElement yprof = driverch.FindElement(By.LinkText("Your profile"));
+            yprof.Click();
+
+        
+        }
+    }
+}
