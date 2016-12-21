@@ -1,0 +1,125 @@
+Login Form Page
+
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace GmailTest
+{
+    class Loginform
+    {
+
+        public void Logindetails(IWebDriver ie)
+        {
+            ie.Navigate().GoToUrl("https://www.google.com/gmail/about/");
+            IWebElement creataccount = ie.FindElement(By.LinkText("CREATE AN ACCOUNT"));
+            creataccount.Click();
+
+            // Get Title 
+            string mycurrenturl1 = ie.Title;
+
+
+
+            WebDriverWait wait = new WebDriverWait(ie, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.TitleContains("Google"));
+
+
+            ie.SwitchTo().Window(ie.WindowHandles.Last());
+
+            string tit = ie.Title;
+            Console.WriteLine(tit);
+            string firstname = "printa";
+            string lastname = "ajith";
+            string username = "printatest2016";
+            string password = "beautifulday20";
+            string confirmpassword = "beautifulday20";
+            int day = 02;
+            int year = 1984;
+
+
+            //Firstname enabled
+            Assert.IsTrue(ie.FindElement(By.Id("FirstName")).Enabled);
+
+            ie.FindElement(By.Id("FirstName")).SendKeys(firstname);
+
+
+            ie.FindElement(By.Id("LastName")).SendKeys(lastname);
+            ie.FindElement(By.Id("GmailAddress")).SendKeys(username);
+            ie.FindElement(By.Id("Passwd")).SendKeys(password);
+            ie.FindElement(By.Id("PasswdAgain")).SendKeys(confirmpassword);
+
+            ie.FindElement(By.XPath("//*[@id='BirthMonth']/div[1]")).Click();
+            ie.FindElement(By.XPath("//*[@id=':6']/div")).Click();
+
+            IJavaScriptExecutor js = (IJavaScriptExecutor)ie;
+
+            js.ExecuteScript("document.getElementById('BirthDay').setAttribute('value', 12)");
+
+          
+            ie.FindElement(By.Id("BirthYear")).SendKeys("1980");
+            ie.FindElement(By.XPath("//*[@id='Gender']/div[1]")).Click();
+            ie.FindElement(By.XPath("//*[@id=':e']/div")).Click();
+
+            ie.FindElement(By.Id("submitbutton")).Submit();
+
+
+            ie.Manage().Window.Maximize();
+
+            ie.SwitchTo().Window(ie.WindowHandles.Last());
+            ie.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(6));
+            string newie = ie.Title;
+            Console.WriteLine(newie);
+
+
+            ie.FindElement(By.XPath("//*[@id='tos-scroll-button']/div/img")).Click();
+            ie.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(6));
+
+            
+            ie.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(600));
+
+            ie.SwitchTo().Window(ie.WindowHandles.Last());
+             
+            
+
+            
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("iagreebutton"))).Click();
+            
+         
+        
+
+
+        }
+    }
+}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Homepage
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
+
+namespace GmailTest
+{
+   
+    public class HomepageGmail
+    {
+       
+        public static void Main(String [] args)
+        {
+            IWebDriver ie = new ChromeDriver();
+
+            Loginform lf = new Loginform();
+            lf.Logindetails(ie);
+
+
+        }
+    }
+}
