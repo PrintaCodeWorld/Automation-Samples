@@ -1,0 +1,6 @@
+ //Selenium select element
+ new SelectElement(ch.FindElement(By.Id("xxx"))).SelectByText("yyyy");
+ 
+ // To upload a file 
+ var uploadfile= ch.FindElement(By.XPath("//*[@id='test']"));
+ uploadfile.SendKeys("C:\\Temp\\test\\testfile.txt");
