@@ -14,3 +14,15 @@ By loadingImage = By.id("loading image ID");
 WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 
 wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingImage));
+
+
+// Radio button selected or not
+IList<IWebElement>   oRadioButton = ch.FindElements(By.Name("CIClaimModel.InsuranceDocumentation")); //Note: Name is always same for the same group of Radio Buttons/Check Boxes but their Values are different. So if you find the element with the name attribute then it means that it may contain more than one element, hence we need to use findElements method and store the list of WebElements.
+Boolean bvalue = false;   
+bvalue = oRadioButton[0].Selected;    
+if (bvalue == true)  
+{  // This will select Second radio button, if the first radio button is selected by default  
+Console.WriteLine(" frist button is selected");  
+}  else    
+{     // If the first radio button is not selected by default, the first will be selected   
+Console.WriteLine(" second button is selected");     }
